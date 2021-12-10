@@ -1,0 +1,34 @@
+---
+- hosts: testserver
+  become: true
+  become_user: root
+
+  tasks:
+  - name: Install Softwares
+    yum:
+      name: {{item}}
+      state: present
+    loop:
+      - docker
+      - git
+      - ansible
+  - name: Clone the repository
+    git:
+      repo:
+        https://github.com/amarpallai/Project1.git
+      dest:
+          /home/ec2-user
+  - name: Start docker
+    service:
+      name:
+        docker
+      state:
+        started
+  - name: Deploy the dockerfile
+    command:
+      chdir:
+        /home/ec2-user docker build -t myphp:1 .
+  - name: Running a container
+    command:
+      docker run --name myphpcon -d -P myphp:1
+  
