@@ -9,9 +9,9 @@
       name: {{item}}
       state: present
     loop:
-      - docker
-      - git
-      - ansible
+    - docker
+    - git
+    - ansible
   - name: Clone the repository
     git:
       repo:
