@@ -5,10 +5,8 @@
 
   tasks:
   - name: Install Softwares
-    yum:
-      name: {{item}}
-      state: present
-  loop:
+    yum: name={{item}} state=present
+    loop:
     - docker
     - git
     - ansible
