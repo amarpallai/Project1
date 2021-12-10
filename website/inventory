@@ -1,0 +1,2 @@
+[testserver]
+172.31.38.70 ansible_user=ec2-user
