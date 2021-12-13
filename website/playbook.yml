@@ -15,7 +15,7 @@
       repo:
         https://github.com/amarpallai/Project1.git
       dest:
-          /home/ec2-user
+          /home/ec2-user/proj1
   - name: Start docker
     service:
       name:
@@ -25,7 +25,7 @@
   - name: Deploy the dockerfile
     command:
       chdir:
-        /home/ec2-user docker build -t myphp:1 .
+        /home/ec2-user/proj1 docker build -t myphp:1 .
   - name: Running a container
     command:
       docker run --name myphpcon -d -P myphp:1
