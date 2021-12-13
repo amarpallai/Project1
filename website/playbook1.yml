@@ -1,26 +1,24 @@
 ---
-- hosts: testserver
+- hosts: webserver
   become: true
   become_user: root
 
   tasks:
-  - name: Install Softwares
+  - name: Install httpd
     yum:
-      name: {{item}}
+      name: httpd
       state: present
-    loop:
-    - docker
-    - git
-    - ansible
-  - name: Clone the repository
-    git:
-      repo:
-        https://github.com/amarpallai/Project1.git
-      dest:
-          /home/ec2-user
-  - name: Start docker
+  - name: start httpd
     service:
-      name:
-        docker
-      state:
-        started
+      name: httpd
+      state: started
+  - name: Deploy html file
+    copy:
+      src: index.html
+      dest: /var/www/html
+    notify: Restart httpd
+  handlers:
+    - name: Restart the httpd
+      service:
+        name: httpd
+        state: restarted
